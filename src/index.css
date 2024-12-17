@@ -1,0 +1,21 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --primary-light: #ffffff;
+  --text-light: #1a1a1a;
+  --primary-dark: #1a1f2b;
+  --text-dark: #ffffff;
+}
+
+/* Apply theme-specific styles */
+.dark {
+  --bg-primary: var(--primary-dark);
+  --text-primary: var(--text-dark);
+}
+
+.light {
+  --bg-primary: var(--primary-light);
+  --text-primary: var(--text-light);
+}
