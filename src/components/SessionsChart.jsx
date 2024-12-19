@@ -1,10 +1,23 @@
-import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
+import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { useTheme } from '../contexts/ThemeContext';
+import { FormattedMessage } from 'react-intl';
 
 const sessionData = [
-  { name: 'Assigned', value: 33, color: '#ef4444' },
-  { name: 'Not Assigned', value: 33, color: '#22c55e' },
-  { name: 'Reassigned', value: 34, color: '#eab308' },
+  {
+    name: <FormattedMessage id='chart.sessionsByChannel.assigned' />,
+    value: 33,
+    color: '#ef4444',
+  },
+  {
+    name: <FormattedMessage id='chart.sessionsByChannel.notAssigned' />,
+    value: 33,
+    color: '#22c55e',
+  },
+  {
+    name: <FormattedMessage id='chart.sessionsByChannel.reAssigned' />,
+    value: 34,
+    color: '#eab308',
+  },
 ];
 
 function SessionsChart() {
@@ -20,7 +33,7 @@ function SessionsChart() {
           isDark ? 'text-white' : 'text-gray-800'
         } text-lg font-semibold mb-6`}
       >
-        Sessions By Channel
+        <FormattedMessage id='chart.sessionsByChannel' />
       </h2>
       <div className='h-48'>
         <ResponsiveContainer width='100%' height='100%'>
@@ -38,7 +51,6 @@ function SessionsChart() {
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip />
           </PieChart>
         </ResponsiveContainer>
       </div>
@@ -75,7 +87,7 @@ function SessionsChart() {
           8,234
         </div>
         <div className={`text-sm ${isDark ? 'text-white' : 'text-gray-600'}`}>
-          Total Sessions
+          <FormattedMessage id='chart.sessionsByChannel.totalSessions' />
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDataContext } from '../contexts/DataContext';
 import FormField from './Generic/FormField';
 import Button from './Generic/Button';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 function ProjectDetail({ handlePrev, handleClose }) {
   const {
@@ -14,6 +15,7 @@ function ProjectDetail({ handlePrev, handleClose }) {
     tableData,
     setOriginalData,
   } = useDataContext();
+  const intl = useIntl();
   const {
     register,
     handleSubmit,
@@ -49,74 +51,120 @@ function ProjectDetail({ handlePrev, handleClose }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='text-gray-800'>
       <div>
-        <h2 className='text-lg font-bold'>Step 3: Project Info</h2>
+        <h2 className='text-lg font-bold'>
+          <FormattedMessage id='multiStepForm.step3.title' />
+        </h2>
         <FormField
           name='projectName'
-          placeholder='Project Name'
+          placeholder={intl.formatMessage({
+            id: 'multiStepForm.step3.lable.projectName',
+          })}
           register={register}
-          rules={{ required: 'Project Name is required' }}
+          rules={{
+            required: intl.formatMessage({
+              id: 'multiStepForm.step3.lable.projectName.errorMsg',
+            }),
+          }}
           errors={errors}
-          label='Project Name'
+          label={intl.formatMessage({
+            id: 'multiStepForm.step3.lable.projectName',
+          })}
         />
 
         <FormField
           name='details'
-          placeholder='Details'
+          placeholder={intl.formatMessage({
+            id: 'multiStepForm.step3.lable.projectDetails',
+          })}
           register={register}
-          rules={{ required: 'Details are required' }}
+          rules={{
+            required: intl.formatMessage({
+              id: 'multiStepForm.step3.lable.projectDetails.errorMsg',
+            }),
+          }}
           errors={errors}
           type='textarea'
-          label='Project Details'
+          label={intl.formatMessage({
+            id: 'multiStepForm.step3.lable.projectDetails',
+          })}
         />
 
         <FormField
           name='techStack'
-          placeholder='Tech Stack'
+          placeholder={intl.formatMessage({
+            id: 'multiStepForm.step3.lable.techStack',
+          })}
           register={register}
           rules={{
-            required: 'Tech Stack is required',
+            required: intl.formatMessage({
+              id: 'multiStepForm.step3.lable.techStack.requiredErrorMsg',
+            }),
             pattern: {
               value: /^[A-Za-z\s,.]+$/,
-              message: 'Tech Stack must contain only letters and spaces',
+              message: intl.formatMessage({
+                id: 'multiStepForm.step3.lable.techStack.errorMsg',
+              }),
             },
           }}
           errors={errors}
-          label='Tech Stack'
+          label={intl.formatMessage({
+            id: 'multiStepForm.step3.lable.techStack',
+          })}
         />
         <FormField
           name='resources'
-          placeholder='Required Resources'
+          placeholder={intl.formatMessage({
+            id: 'multiStepForm.step3.lable.resources',
+          })}
           register={register}
           type='number'
           rules={{
-            required: 'Resources are required',
-            min: { value: 1, message: 'Resources must be greater than 0' },
+            required: intl.formatMessage({
+              id: 'multiStepForm.step3.lable.resources.requiredErrorMsg',
+            }),
+            min: {
+              value: 1,
+              message: intl.formatMessage({
+                id: 'mutliStepForm.step3.lable.resources.errorMsg',
+              }),
+            },
           }}
           errors={errors}
-          label='Resources'
+          label={intl.formatMessage({
+            id: 'multiStepForm.step3.lable.resources',
+          })}
         />
         <FormField
           name='hours'
-          placeholder='Hours'
+          placeholder={intl.formatMessage({
+            id: 'multiStepForm.step3.lable.hours',
+          })}
           type='number'
           register={register}
           rules={{
-            required: 'Hours are required',
-            min: { value: 1, message: 'Hours must be greater than 0' },
+            required: intl.formatMessage({
+              id: 'multiStepForm.step3.lable.hours.requiredErrorMsg',
+            }),
+            min: {
+              value: 1,
+              message: intl.formatMessage({
+                id: 'multiStepForm.step3.lable.hours.errorMsg',
+              }),
+            },
           }}
           errors={errors}
-          label='Hours'
+          label={intl.formatMessage({ id: 'multiStepForm.step3.lable.hours' })}
         />
       </div>
 
       <div className='flex justify-between mt-6'>
         <Button
-          btnLabel='Prev'
+          btnLabel={intl.formatMessage({ id: 'multiStepForm.prevBtn' })}
           onClick={handlePrev}
           className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700'
         />
         <Button
-          btnLabel='Next'
+          btnLabel={intl.formatMessage({ id: 'multiStepForm.nextBtn' })}
           onClick={handleSubmit(onSubmit)}
           className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700'
         />

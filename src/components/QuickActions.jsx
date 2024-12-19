@@ -2,17 +2,44 @@ import { CreditCard, ShoppingBag, Users } from 'lucide-react';
 import { useDataContext } from '../contexts/DataContext';
 import Button from './Generic/Button';
 import { useTheme } from '../contexts/ThemeContext';
-const quickActions = [
-  { title: 'Add Client', icon: <Users size={20} /> },
-  { title: 'Create Quote', icon: <CreditCard size={20} /> },
-  { title: 'Enter Payment', icon: <ShoppingBag size={20} /> },
-  { title: 'Create Invoice', icon: <CreditCard size={20} /> },
-];
+import { FormattedMessage, useIntl } from 'react-intl';
 function QuickActions() {
+  const intl = useIntl();
+  const quickActions = [
+    {
+      title: intl.formatMessage({
+        id: 'quickActions.button.addClient',
+      }),
+      icon: <Users size={20} />,
+    },
+    {
+      title: intl.formatMessage({
+        id: 'quickActions.button.createQuote',
+      }),
+      icon: <CreditCard size={20} />,
+    },
+    {
+      title: intl.formatMessage({
+        id: 'quickActions.button.enterPayment',
+      }),
+      icon: <ShoppingBag size={20} />,
+    },
+    {
+      title: intl.formatMessage({
+        id: 'quickActions.button.createInvoice',
+      }),
+      icon: <CreditCard size={20} />,
+    },
+  ];
   const { isDark } = useTheme();
   const { setIsModalShow } = useDataContext();
   const handleModal = (title) => {
-    if (title !== 'Add Client') {
+    if (
+      title !==
+      intl.formatMessage({
+        id: 'quickActions.button.addClient',
+      })
+    ) {
       return;
     }
     setIsModalShow(true);
@@ -35,14 +62,14 @@ function QuickActions() {
                 isDark ? 'text-white' : 'text-gray-800'
               } font-semibold mb-2 md:mb-0`}
             >
-              Quick Actions
+              <FormattedMessage id='quickActions.title' />
             </h5>
             <p
               className={`text-sm ${
                 isDark ? 'text-white' : 'text-gray-800'
               } md:ml-auto flex items-center`}
             >
-              How are your active users trending over time?
+              <FormattedMessage id='quickActions.subtitle' />
               <i className='ml-1 icon-bulb'></i>
             </p>
           </div>

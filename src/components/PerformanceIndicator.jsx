@@ -3,12 +3,12 @@ import {
   BarChart,
   CartesianGrid,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from 'recharts';
 import Button from './Generic/Button';
 import { useTheme } from '../contexts/ThemeContext';
+import { FormattedMessage } from 'react-intl';
 
 const performanceData = [
   { name: 'Jan', complaints: 160, taskDone: 120, attends: 100 },
@@ -38,7 +38,7 @@ function PerformanceIndicator() {
             isDark ? 'text-white' : 'text-gray-800'
           } text-lg font-semibold`}
         >
-          Performance Indicator
+          <FormattedMessage id='chart.performanceIndicator' />
         </h2>
         <div className='flex gap-4 text-sm'>
           {['7D', '2w', '1M', '3M', '6M'].map((period, index) => (
@@ -63,7 +63,8 @@ function PerformanceIndicator() {
           <span
             className={`text-sm ${isDark ? 'text-white' : 'text-gray-600'}`}
           >
-            Complaints (2098)
+            <FormattedMessage id='chart.performanceIndicator.complaints' />{' '}
+            (2098)
           </span>
         </div>
         <div className='flex items-center gap-2'>
@@ -71,7 +72,7 @@ function PerformanceIndicator() {
           <span
             className={`text-sm ${isDark ? 'text-white' : 'text-gray-600'}`}
           >
-            Task Done (1123)
+            <FormattedMessage id='chart.performanceIndicator.taskDone' /> (1123)
           </span>
         </div>
         <div className='flex items-center gap-2'>
@@ -79,7 +80,7 @@ function PerformanceIndicator() {
           <span
             className={`text-sm ${isDark ? 'text-white' : 'text-gray-600'}`}
           >
-            Attends (876)
+            <FormattedMessage id='chart.performanceIndicator.attends' /> (876)
           </span>
         </div>
       </div>
@@ -110,7 +111,6 @@ function PerformanceIndicator() {
                 350, 375, 400, 425, 450, 475, 500,
               ]}
             />
-            <Tooltip />
             <Bar
               dataKey='complaints'
               stackId='a'

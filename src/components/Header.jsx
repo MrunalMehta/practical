@@ -2,9 +2,12 @@ import { Bell, Search, ShoppingCart } from 'lucide-react';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import Button from './Generic/Button';
+import LanguageSelector from './LanguageSelector';
+import { FormattedMessage } from 'react-intl';
 
 function Header() {
   const { isDark } = useContext(ThemeContext);
+
   return (
     <header
       className={`
@@ -19,7 +22,7 @@ function Header() {
               isDark ? 'text-white' : 'text-gray-800'
             } hidden lg:block`}
           >
-            Welcome stellar dashboard!
+            <FormattedMessage id='welcome.msg' />
           </h1>
 
           <div className='flex items-center gap-2 md:gap-4 lg:gap-6'>
@@ -65,12 +68,7 @@ function Header() {
               />
             </div>
 
-            <div className='hidden lg:flex items-center gap-2'>
-              <img src='/us-flag.png' alt='US' className='w-5 h-5' />
-              <span className={`${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                English
-              </span>
-            </div>
+            <LanguageSelector />
 
             <div className='hidden lg:flex items-center gap-3'>
               <img
@@ -79,7 +77,7 @@ function Header() {
                 className='w-8 h-8 rounded-full'
               />
               <span className={`${isDark ? 'text-white' : 'text-gray-800'}`}>
-                Henry Klein
+                <FormattedMessage id='profile.name' />
               </span>
             </div>
           </div>

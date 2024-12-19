@@ -4,8 +4,10 @@ import FormField from './Generic/FormField';
 import PropTypes from 'prop-types';
 import Button from './Generic/Button';
 import { useTheme } from '../contexts/ThemeContext';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 function ClientInformation({ handleNext }) {
+  const intl = useIntl();
   const { isDark } = useTheme();
   const { setFormData, formData } = useDataContext();
   const {
@@ -29,41 +31,61 @@ function ClientInformation({ handleNext }) {
       onSubmit={handleSubmit(onSubmit)}
       className={`${isDark ? 'text-white' : 'text-gray-800'}`}
     >
-      <h2 className='text-lg font-bold'>Step 1: Personal Info</h2>
+      <h2 className='text-lg font-bold'>
+        <FormattedMessage id='multiStepForm.step1.title' />
+      </h2>
 
       <FormField
         name='clientName'
-        placeholder='Name'
+        placeholder={intl.formatMessage({
+          id: 'multiStepForm.step1.lable.clientName',
+        })}
         register={register}
-        rules={{ required: 'Client Name is required' }}
+        rules={{
+          required: intl.formatMessage({
+            id: 'multiStepForm.step1.lable.clientName.requiredErrorMsg',
+          }),
+        }}
         errors={errors}
-        label='Client Name'
+        label={intl.formatMessage({
+          id: 'multiStepForm.step1.lable.clientName',
+        })}
       />
       <FormField
         name='email'
-        placeholder='Email'
+        placeholder={intl.formatMessage({
+          id: 'multiStepForm.step1.lable.email',
+        })}
         register={register}
         rules={{
-          required: 'Email is required',
+          required: intl.formatMessage({
+            id: 'multiStepForm.step1.lable.email.requiredErrorMsg',
+          }),
           pattern: {
             value: /^[^@]+@[^@]+\.[^@]+$/,
-            message: 'Invalid email address',
+            message: intl.formatMessage({
+              id: 'multiStepForm.step1.lable.email.errorMsg',
+            }),
           },
         }}
         errors={errors}
-        label='Email'
+        label={intl.formatMessage({ id: 'multiStepForm.step1.lable.email' })}
       />
 
       <div className={isDark ? 'text-white' : 'text-gray-800'}>
         <label htmlFor='region' className='block text-sm font-medium'>
-          Region
+          {intl.formatMessage({ id: 'multiStepForm.step1.lable.region' })}
         </label>
         <select
           id='region'
-          {...register('region', { required: 'Region is required' })}
-          className={`w-full p-2 mt-1 border rounded bg-inherit ${
-            isDark ? 'text-white bg-gray-800' : 'text-gray-800'
-          }`}
+          {...register('region', {
+            required: intl.formatMessage({
+              id: 'multiStepForm.step1.lable.region.requiredErrorMsg',
+            }),
+          })}
+          className={`w-full p-2 mt-1 border rounded ${
+            errors.region ? 'border-red-500' : ''
+          } ${isDark ? 'text-white bg-gray-800' : 'text-gray-800'}`}
         >
           <option value=''>Select Region</option>
           <option value='North America'>North America</option>

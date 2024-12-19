@@ -3,9 +3,11 @@ import { useDataContext } from '../contexts/DataContext';
 import FormField from './Generic/FormField';
 import PropTypes from 'prop-types';
 import Button from './Generic/Button';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 function Orgamization({ handleNext, handlePrev }) {
   const { setFormData, formData } = useDataContext();
+  const intl = useIntl();
   const {
     register,
     handleSubmit,
@@ -24,56 +26,82 @@ function Orgamization({ handleNext, handlePrev }) {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='text-gray-800'>
-      <h2 className='text-lg font-bold'>Step 2: Organization Details</h2>
+      <h2 className='text-lg font-bold'>
+        <FormattedMessage id='multiStepForm.step2.title' />
+      </h2>
 
       <FormField
         name='orgName'
-        placeholder='Organization Details'
+        placeholder={intl.formatMessage({
+          id: 'multiStepForm.step2.lable.orgDetail',
+        })}
         register={register}
-        rules={{ required: 'Organization Details are required' }}
+        rules={{
+          required: intl.formatMessage({
+            id: 'multiStepForm.step2.lable.orgDetail.errorMsg',
+          }),
+        }}
         errors={errors}
-        label='Organization Name'
+        label={intl.formatMessage({
+          id: 'multiStepForm.step2.lable.orgDetail',
+        })}
       />
 
       <FormField
         name='registerNo'
-        placeholder='Registered Number'
+        placeholder={intl.formatMessage({
+          id: 'multiStepForm.step2.lable.registeredNumber',
+        })}
         register={register}
         rules={{
-          required: 'Registered Number is required',
+          required: intl.formatMessage({
+            id: 'multiStepForm.step2.lable.registeredNumber.requiredErrorMsg',
+          }),
           minLength: {
             value: 5,
-            message: 'Registered Number must be 5 digits',
+            message: intl.formatMessage({
+              id: 'mutliStepForm.step2.lable.errorMsg',
+            }),
           },
           maxLength: {
             value: 5,
-            message: 'Registered Number must be 5 digits',
+            message: intl.formatMessage({
+              id: 'mutliStepForm.step2.lable.errorMsg',
+            }),
           },
         }}
         errors={errors}
         type='number'
-        label='Registered Number'
+        label={intl.formatMessage({
+          id: 'multiStepForm.step2.lable.registeredNumber',
+        })}
       />
 
       <FormField
         name='address'
-        placeholder='Address'
+        placeholder={intl.formatMessage({
+          id: 'multiStepForm.step2.lable.address',
+        })}
         register={register}
-        rules={{ required: 'Address is required' }}
+        rules={{
+          required: intl.formatMessage({
+            id: 'multiStepForm.step2.lable.address.requiredErrorMsg',
+          }),
+        }}
         errors={errors}
         type='textarea'
-        label='Address'
+        label={intl.formatMessage({ id: 'multiStepForm.step2.lable.address' })}
       />
       <div className='flex justify-between mt-6'>
         <Button
           onClick={handlePrev}
           className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700'
-          btnLabel='Prev'
+          btnLabel={intl.formatMessage({ id: 'multiStepForm.prevBtn' })}
         />
         <Button
           onClick={handleSubmit(onSubmit)}
           className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700'
-          btnLabel='Next'
+          btnLabel={intl.formatMessage({ id: 'multiStepForm.nextBtn' })}
         />
       </div>
     </form>

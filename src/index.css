@@ -28,3 +28,6 @@
   --bg-primary: var(--primary-light);
   --text-primary: var(--text-light);
 }
+.text-color{
+  color: #0dda6d
+}

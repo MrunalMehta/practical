@@ -7,9 +7,16 @@ export const useTheme = () => useContext(ThemeContext);
 
 function ThemeProvider({ children }) {
   const [isDark, setIsDark] = useState(true);
+  const [locale, setLocale] = useState('en');
+
+  const changeLanguage = (lang) => {
+    setLocale(lang);
+  };
   const toggleTheme = () => setIsDark(!isDark);
   return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{ isDark, toggleTheme, locale, changeLanguage }}
+    >
       {children}
     </ThemeContext.Provider>
   );

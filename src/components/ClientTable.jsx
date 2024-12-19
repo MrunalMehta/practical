@@ -3,22 +3,10 @@ import { useDataContext } from '../contexts/DataContext';
 import { useEffect, useState } from 'react';
 import Button from './Generic/Button';
 import { useTheme } from '../contexts/ThemeContext';
-
-const columns = [
-  { key: 'clientName', label: 'Client Name' },
-  { key: 'region', label: 'Region' },
-  { key: 'email', label: 'Email' },
-  { key: 'orgName', label: 'Organization Name' },
-  { key: 'registerNo', label: 'Registered No.' },
-  { key: 'address', label: 'Address' },
-  { key: 'projectName', label: 'Project Name' },
-  { key: 'details', label: 'Detail' },
-  { key: 'techStack', label: 'Tech Stack' },
-  { key: 'resources', label: 'Resources' },
-  { key: 'hours', label: 'Hours' },
-];
+import { useIntl } from 'react-intl';
 
 function ClientTable() {
+  const intl = useIntl();
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const { isDark } = useTheme();
@@ -59,6 +47,53 @@ function ClientTable() {
     setIsEditMode(true);
   };
 
+  const columns = [
+    {
+      key: 'clientName',
+      label: intl.formatMessage({ id: 'multiStepForm.step1.lable.clientName' }),
+    },
+    {
+      key: 'region',
+      label: intl.formatMessage({ id: 'multiStepForm.step1.lable.region' }),
+    },
+    {
+      key: 'email',
+      label: intl.formatMessage({ id: 'multiStepForm.step1.lable.email' }),
+    },
+    {
+      key: 'orgName',
+      label: intl.formatMessage({ id: 'multiStepForm.step2.lable.orgDetail' }),
+    },
+    {
+      key: 'registerNo',
+      label: intl.formatMessage({
+        id: 'multiStepForm.step2.lable.registeredNumber',
+      }),
+    },
+    {
+      key: 'address',
+      label: intl.formatMessage({ id: 'multiStepForm.step2.lable.address' }),
+    },
+    {
+      key: 'projectName',
+      label: intl.formatMessage({
+        id: 'multiStepForm.step3.lable.projectName',
+      }),
+    },
+    { key: 'details', label: intl.formatMessage({ id: 'details' }) },
+    {
+      key: 'techStack',
+      label: intl.formatMessage({ id: 'multiStepForm.step3.lable.techStack' }),
+    },
+    {
+      key: 'resources',
+      label: intl.formatMessage({ id: 'multiStepForm.step3.lable.resources' }),
+    },
+    {
+      key: 'hours',
+      label: intl.formatMessage({ id: 'multiStepForm.step3.lable.hours' }),
+    },
+  ];
   return (
     <div
       className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm`}
@@ -73,11 +108,11 @@ function ClientTable() {
             isDark ? 'text-white' : 'text-gray-800'
           } text-lg font-semibold`}
         >
-          Client Data
+          {intl.formatMessage({ id: 'table.title.clientData' })}
         </h2>
         <input
           type='text'
-          placeholder='Search Client'
+          placeholder={intl.formatMessage({ id: 'table.search.searchClient' })}
           className={`${
             isDark ? 'text-white bg-gray-800' : 'text-gray-800'
           } p-2 border rounded w-60`}
@@ -86,7 +121,7 @@ function ClientTable() {
         />
         <Button
           className='text-blue-500 text-sm hover:text-blue-600'
-          btnLabel='View all Clients'
+          btnLabel={intl.formatMessage({ id: 'table.lable.viewAllClientBtn' })}
         />
       </div>
 
@@ -150,7 +185,9 @@ function ClientTable() {
           </table>
         </div>
       ) : (
-        <div className='p-6 text-gray-500 text-center'>No clients found.</div>
+        <div className='p-6 text-gray-500 text-center'>
+          <formatMessage id='table.search.noData' />.
+        </div>
       )}
     </div>
   );
