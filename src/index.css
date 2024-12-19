@@ -2,13 +2,22 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
 :root {
   --primary-light: #ffffff;
   --text-light: #1a1a1a;
   --primary-dark: #1a1f2b;
   --text-dark: #ffffff;
 }
-
+/* #root{
+  margin: 0px !important;
+  padding: 0px !important;
+  max-width: none !important;
+} */
 /* Apply theme-specific styles */
 .dark {
   --bg-primary: var(--primary-dark);

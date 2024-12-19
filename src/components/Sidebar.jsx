@@ -15,12 +15,12 @@ function Sidebar({ isOpen, setIsOpen }) {
   ];
   return (
     <>
-    <button
+    {!isOpen && <button
       onClick={() => setIsOpen(!isOpen)}
-      className="fixed top-4 left-4 z-50 lg:hidden"
+      className="fixed top-5 left-0 z-50 "
     >
       <Menu size={24} />
-    </button>
+    </button>}
 
     <div className={`fixed top-0 left-0 h-full ${isOpen ? 'w-64' : 'w-0'} 
       ${isDark ? 'bg-gray-900' : 'bg-white'} 
@@ -35,11 +35,19 @@ function Sidebar({ isOpen, setIsOpen }) {
         <button onClick={toggleTheme}>
           {isDark ? <Sun size={20} /> : <Moon size={20} />}
         </button>
+        <button
+      onClick={() => setIsOpen(!isOpen)}
+      className=" "
+    >
+      <Menu size={24} />
+    </button>
       </div>
 
       <div className="p-4 border-b border-gray-700">
         <div className="flex items-center space-x-3">
-          <img src="/api/placeholder/40/40" alt="Profile" className="rounded-full" />
+          <div className='h-10 w-10 rounded-full relative'>
+          <img src="https://img.freepik.com/free-photo/artist-white_1368-3543.jpg?semt=ais_hybrid" alt="Profile" className="object-cover rounded-full" />
+          </div>
           <div>
             <h3 className="font-medium">Henry Klein</h3>
             <p className="text-sm text-gray-500">Administrator</p>

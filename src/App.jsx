@@ -8,14 +8,17 @@ import Clients from './pages/Clients';
 
 function App() {
   return (
-   <ThemeProvider>
-        <Layout />
+    <ThemeProvider>
+      <div className="h-screen">
+      <Layout >
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/clients" element={<Clients />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/clients' element={<Clients />} />
+        <Route path='/profile' element={<Profile />} />
       </Routes>
-      </ThemeProvider>
+      </Layout>
+      </div>
+    </ThemeProvider>
   );
 }
 
