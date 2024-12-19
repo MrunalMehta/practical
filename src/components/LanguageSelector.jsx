@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Flag } from 'lucide-react';
 import Button from './Generic/Button';
+import English from '../assets/english.svg';
+import German from '../assets/german.svg';
 
 const languages = [
-  { code: 'en', name: 'English', flag: <Flag size={20} /> },
-  { code: 'de', name: 'German', flag: <Flag size={20} /> },
+  { code: 'en', name: 'English', flag: <img src={English} alt='english' /> },
+  { code: 'de', name: 'German', flag: <img src={German} alt='german' /> },
 ];
 function LanguageSelector() {
   const { isDark, locale, changeLanguage } = useTheme();
@@ -15,7 +17,7 @@ function LanguageSelector() {
 
   return (
     <div className='relative hidden lg:flex items-center gap-2'>
-      <Flag size={20} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
+      {selectedLanguage.flag}
       <Button
         onClick={() => setIsOpen(!isOpen)}
         className='flex items-center gap-2 bg-white border border-gray-300 rounded px-2 py-1'

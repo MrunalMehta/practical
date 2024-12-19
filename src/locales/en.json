@@ -68,5 +68,8 @@
   "table.title.clientData": "Client Data",
   "table.search.searchClient": "Search Client",
   "table.search.noData": "No clients found",
-  "table.lable.viewAllClientBtn": "View all Clients"
+  "table.lable.viewAllClientBtn": "View all Clients",
+  "button.lable.goHome": "Go Home",
+  "title.pageNotFound": "Page Not Found",
+  "subTitle.pageNotFound": "The page you’re looking for doesn't exist."
 }
