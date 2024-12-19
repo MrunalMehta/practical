@@ -1,7 +1,11 @@
 import { useForm } from 'react-hook-form';
+import { useDataContext } from '../contexts/DataContext';
+import FormField from './Generic/FormField';
+import PropTypes from 'prop-types';
+import Button from './Generic/Button';
 
-/* eslint-disable react/prop-types */
-function Orgamization({ handlePrev, handleNext, setFormData, formData, isEditMode, setIsEditMode, tableData }) {
+function Orgamization({ handleNext, handlePrev }) {
+  const { setFormData, formData } = useDataContext();
   const {
     register,
     handleSubmit,
@@ -20,60 +24,65 @@ function Orgamization({ handlePrev, handleNext, setFormData, formData, isEditMod
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='text-gray-800'>
-      <div>
-        <input
-          type='text'
-          placeholder='Organization Details'
-          className='w-full p-2 mt-4 border rounded'
-          {...register('orgName', {
-            required: 'Organization Details are required',
-          })}
-        />
-        {errors.orgName && (
-          <p className='text-red-500 text-xs'>{errors.orgName.message}</p>
-        )}
-      </div>
+      <h2 className='text-lg font-bold'>Step 2: Organization Details</h2>
 
-      <div>
-        <input
-          type='text'
-          placeholder='Registered Number'
-          className='w-full p-2 mt-2 border rounded'
-          {...register('registerNo', {
-            required: 'Registered Number is required',
-          })}
-        />
-        {errors.registerNo && (
-          <p className='text-red-500 text-xs'>{errors.registerNo.message}</p>
-        )}
-      </div>
+      <FormField
+        name='orgName'
+        placeholder='Organization Details'
+        register={register}
+        rules={{ required: 'Organization Details are required' }}
+        errors={errors}
+        label='Organization Name'
+      />
 
-      <div>
-        <textarea
-          placeholder='Address'
-          className='w-full p-2 mt-2 border rounded'
-          {...register('address', { required: 'Address is required' })}
-        />
-        {errors.address && (
-          <p className='text-red-500 text-xs'>{errors.address.message}</p>
-        )}
-      </div>
+      <FormField
+        name='registerNo'
+        placeholder='Registered Number'
+        register={register}
+        rules={{
+          required: 'Registered Number is required',
+          minLength: {
+            value: 5,
+            message: 'Registered Number must be 5 digits',
+          },
+          maxLength: {
+            value: 5,
+            message: 'Registered Number must be 5 digits',
+          },
+        }}
+        errors={errors}
+        type='number'
+        label='Registered Number'
+      />
+
+      <FormField
+        name='address'
+        placeholder='Address'
+        register={register}
+        rules={{ required: 'Address is required' }}
+        errors={errors}
+        type='textarea'
+        label='Address'
+      />
       <div className='flex justify-between mt-6'>
-        <button
+        <Button
           onClick={handlePrev}
           className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700'
-        >
-          Prev
-        </button>
-        <button
+          btnLabel='Prev'
+        />
+        <Button
           onClick={handleSubmit(onSubmit)}
           className='px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700'
-        >
-          Next
-        </button>
+          btnLabel='Next'
+        />
       </div>
     </form>
   );
 }
+
+Orgamization.propTypes = {
+  handleNext: PropTypes.func.isRequired,
+  handlePrev: PropTypes.func.isRequired,
+};
 
 export default Orgamization;

@@ -1,132 +1,156 @@
-/* eslint-disable react/prop-types */
 import { Edit } from 'lucide-react';
+import { useDataContext } from '../contexts/DataContext';
+import { useEffect, useState } from 'react';
+import Button from './Generic/Button';
+import { useTheme } from '../contexts/ThemeContext';
 
-function ClientTable({tableData, setTableData, setFormData, setIsOpen, setIsEditMode}) {
-  const handleEdit = (id)=>{
-    const editData = tableData.find((item) => item.id === id)
-    setFormData(editData)
-    setIsOpen(true)
-    setIsEditMode(true)
-  }
+const columns = [
+  { key: 'clientName', label: 'Client Name' },
+  { key: 'region', label: 'Region' },
+  { key: 'email', label: 'Email' },
+  { key: 'orgName', label: 'Organization Name' },
+  { key: 'registerNo', label: 'Registered No.' },
+  { key: 'address', label: 'Address' },
+  { key: 'projectName', label: 'Project Name' },
+  { key: 'details', label: 'Detail' },
+  { key: 'techStack', label: 'Tech Stack' },
+  { key: 'resources', label: 'Resources' },
+  { key: 'hours', label: 'Hours' },
+];
+
+function ClientTable() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+  const { isDark } = useTheme();
+  const {
+    tableData,
+    setTableData,
+    setFormData,
+    setIsModalShow,
+    setIsEditMode,
+    originalData,
+  } = useDataContext();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (debouncedQuery) {
+      const filteredData = originalData.filter((row) =>
+        Object.values(row).some((value) =>
+          value.toString().toLowerCase().includes(debouncedQuery.toLowerCase())
+        )
+      );
+      setTableData(filteredData);
+    } else {
+      setTableData(originalData); // Reset to original data
+    }
+  }, [debouncedQuery, originalData, setTableData]);
+
+  const handleEdit = (id) => {
+    const editData = tableData.find((item) => item.id === id);
+    setFormData(editData);
+    setIsModalShow(true);
+    setIsEditMode(true);
+  };
+
   return (
-    <div className='bg-white rounded-lg shadow-sm'>
-      <div className='flex justify-between items-center p-6 border-b border-gray-100'>
-        <h2 className='text-gray-800 text-lg font-semibold'>Client Data</h2>
-        <button className='text-blue-500 text-sm hover:text-blue-600'>
-          View all Client
-        </button>
+    <div
+      className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm`}
+    >
+      <div
+        className={`flex justify-between items-center p-6 border-b ${
+          isDark ? 'border-white' : 'border-gray-100'
+        }`}
+      >
+        <h2
+          className={`${
+            isDark ? 'text-white' : 'text-gray-800'
+          } text-lg font-semibold`}
+        >
+          Client Data
+        </h2>
+        <input
+          type='text'
+          placeholder='Search Client'
+          className={`${
+            isDark ? 'text-white bg-gray-800' : 'text-gray-800'
+          } p-2 border rounded w-60`}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Button
+          className='text-blue-500 text-sm hover:text-blue-600'
+          btnLabel='View all Clients'
+        />
       </div>
 
-      {tableData?.length > 0 && (
-        <div className='overflow-x-auto max-w-2xl'>
+      {tableData?.length > 0 ? (
+        <div className='overflow-x-auto'>
           <table className='w-full'>
-            <thead className='bg-gray-50 border-b border-gray-100'>
+            <thead
+              className={`${
+                isDark
+                  ? 'bg-gray-800 border-white'
+                  : 'bg-gray-50  border-gray-100'
+              }  border-b`}
+            >
               <tr>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Client Name
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Region
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Email
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Organization Name
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Registered No.
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Address
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Project Name
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Detail
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Tech Stack
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Resources
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Hours
-                </th>
-                <th className='text-left px-6 py-3 text-sm font-medium text-gray-500'>
-                  Actions
-                </th>
-                <th className='px-6 py-3'></th>
+                {columns.map((column) => (
+                  <th
+                    key={column.key}
+                    className={`text-left px-6 py-3 text-sm font-medium ${
+                      isDark ? 'text-white' : 'text-gray-500'
+                    }`}
+                  >
+                    {column.label}
+                  </th>
+                ))}
               </tr>
             </thead>
-            <tbody className='divide-y divide-gray-100'>
+            <tbody
+              className={`divide-y ${
+                isDark ? 'divide-white' : 'divide-gray-100'
+              }`}
+            >
               {tableData.map((item) => (
-                <tr key={item.id} className='hover:bg-gray-50'>
+                <tr
+                  key={item.id}
+                  className={isDark ? 'hover:bg-gray-900' : 'hover:bg-gray-50'}
+                >
+                  {columns.map(({ key }) => (
+                    <td
+                      key={key}
+                      className={`px-6 py-4 text-sm ${
+                        isDark ? 'text-white' : 'text-gray-700'
+                      }`}
+                    >
+                      {item[key]}
+                    </td>
+                  ))}
                   <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>
-                      {item.clientName}
-                    </span>
-                  </td>
-
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>{item.region}</span>
-                  </td>
-
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>{item.email}</span>
-                  </td>
-
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>
-                      {item.orgName}
-                    </span>
-                  </td>
-
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>
-                      {item.registerNo}
-                    </span>
-                  </td>
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>
-                      {item.address}
-                    </span>
-                  </td>
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>
-                      {item.projectName}
-                    </span>
-                  </td>
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>
-                      {item.details}
-                    </span>
-                  </td>
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>
-                      {item.techStack}
-                    </span>
-                  </td>
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>
-                      {item.resources}
-                    </span>
-                  </td>
-                  <td className='px-6 py-4'>
-                    <span className='text-sm text-gray-700'>{item.hours}</span>
-                  </td>
-                  <td className='px-6 py-4'>
-                    <button className='text-gray-400 hover:text-gray-600' onClick={()=>handleEdit(item.id)}>
-                      <Edit size={20} />
-                    </button>
+                    <Button
+                      className={
+                        isDark
+                          ? 'text-white'
+                          : 'text-gray-400 hover:text-gray-600'
+                      }
+                      onClick={() => handleEdit(item.id)}
+                      btnLabel={<Edit size={20} />}
+                    />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+      ) : (
+        <div className='p-6 text-gray-500 text-center'>No clients found.</div>
       )}
     </div>
   );

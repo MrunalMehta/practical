@@ -1,78 +1,99 @@
-/* eslint-disable react/prop-types */
-import { Home, Menu, Moon, Sun, User, Users } from 'lucide-react';
+import PropTypes from 'prop-types';
+import { Home, Menu, Moon, Sun, User, Users, X } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import { useLocation, useNavigate } from 'react-router-dom';
+import Button from './Generic/Button';
+import { Link, useLocation } from 'react-router-dom';
 
-function Sidebar({ isOpen, setIsOpen }) {
-  const { isDark, toggleTheme } = useTheme();
-  const navigate = useNavigate();
+const NavLink = ({ item, isOpen, isDark }) => {
   const location = useLocation();
+  const isActive = location.pathname === item.path;
 
-  const menuItems = [
-    { path: '/', name: 'Home', icon: <Home size={20} /> },
-    { path: '/clients', name: 'Clients', icon: <Users size={20} /> },
-    { path: '/profile', name: 'Profile', icon: <User size={20} /> },
-  ];
   return (
-    <>
-    {!isOpen && <button
-      onClick={() => setIsOpen(!isOpen)}
-      className="fixed top-5 left-0 z-50 "
+    <Link
+      to={item.path}
+      className={`
+        w-full flex items-center p-4 transition-colors ${
+          isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-50'
+        }
+        ${isActive ? (isDark ? 'bg-gray-700' : 'hover:bg-gray-100') : ''}
+      `}
     >
-      <Menu size={24} />
-    </button>}
+      {item.icon}
+      {isOpen && <span className='ml-4'>{item.title}</span>}
+    </Link>
+  );
+};
 
-    <div className={`fixed top-0 left-0 h-full ${isOpen ? 'w-64' : 'w-0'} 
-      ${isDark ? 'bg-gray-900' : 'bg-white'} 
-      transition-all duration-300 overflow-hidden z-40
-      ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>
-      
-      <div className="flex items-center justify-between p-4">
-        <div className="flex items-center space-x-2">
-          <div className="w-3 h-3 bg-green-500 rounded-sm"></div>
-          <span className="font-bold text-xl">Stellar</span>
-        </div>
-        <button onClick={toggleTheme}>
-          {isDark ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
-        <button
+NavLink.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  item: PropTypes.object.isRequired,
+};
+function Sidebar({ isOpen, setIsOpen }) {
+  const menuItems = [
+    {
+      title: 'Home',
+      icon: <Home size={20} className='min-w-[20px]' />,
+      path: '/',
+    },
+    {
+      title: 'Clients',
+      icon: <Users size={20} className='min-w-[20px]' />,
+      path: '/clients',
+    },
+    {
+      title: 'Profile',
+      icon: <User size={20} className='min-w-[20px]' />,
+      path: '/profile',
+    },
+  ];
+  const { isDark, toggleTheme } = useTheme();
+  return (
+    <aside
+    className={`
+    ${isOpen ? 'w-64' : 'w-16'} 
+    ${isDark ? 'bg-gray-800 text-white' : 'bg-white text-black'}
+     transition-all duration-300 ease-in-out relative shrink-0
+  `}
+  >
+    <Button
       onClick={() => setIsOpen(!isOpen)}
-      className=" "
-    >
-      <Menu size={24} />
-    </button>
-      </div>
+      className={`
+      absolute -right-3 top-4 ${
+        isDark ? 'hover:bg-gray-700' : ' hover:bg-gray-100'
+      } text-inherit p-1 rounded-full z-50
+    `}
+      btnLabel={isOpen ? <X size={20} /> : <Menu size={20} />}
+    />
 
-      <div className="p-4 border-b border-gray-700">
-        <div className="flex items-center space-x-3">
-          <div className='h-10 w-10 rounded-full relative'>
-          <img src="https://img.freepik.com/free-photo/artist-white_1368-3543.jpg?semt=ais_hybrid" alt="Profile" className="object-cover rounded-full" />
-          </div>
-          <div>
-            <h3 className="font-medium">Henry Klein</h3>
-            <p className="text-sm text-gray-500">Administrator</p>
-          </div>
-        </div>
-      </div>
-
-      <nav className="p-4">
-        {menuItems.map((item) => (
-          <button
-            key={item.path}
-            onClick={() => navigate(item.path)}
-            className={`w-full flex items-center space-x-3 p-3 rounded-lg mb-2
-              ${location.pathname === item.path ? 
-                (isDark ? 'bg-gray-800' : 'bg-gray-200') : 
-                'hover:bg-opacity-50'}`}
-          >
-            {item.icon}
-            <span>{item.name}</span>
-          </button>
-        ))}
-      </nav>
+    <div className='p-4 flex items-center justify-between'>
+      {isOpen && <h2 className='text-xl font-bold'>Dashboard</h2>}
+      <Button
+        onClick={toggleTheme}
+        className={`p-2 rounded-lg ${
+          isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+        }`}
+        btnLabel={isDark ? <Sun size={20} /> : <Moon size={20} />}
+      />
     </div>
-  </>
-  )
+
+    <nav className='mt-8'>
+      {menuItems.map((item) => (
+        <NavLink
+          key={item.title}
+          item={item}
+          isOpen={isOpen}
+          isDark={isDark}
+        />
+      ))}
+    </nav>
+  </aside>
+  );
 }
 
-export default Sidebar
+Sidebar.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
+};
+
+export default Sidebar;

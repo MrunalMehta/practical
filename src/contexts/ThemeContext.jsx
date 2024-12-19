@@ -1,18 +1,22 @@
-/* eslint-disable react/prop-types */
-import { createContext, useContext, useState } from "react";
+import PropTypes from 'prop-types';
+import { createContext, useContext, useState } from 'react';
 
 export const ThemeContext = createContext();
 
 export const useTheme = () => useContext(ThemeContext);
 
-function ThemeProvider({children}) {
+function ThemeProvider({ children }) {
   const [isDark, setIsDark] = useState(true);
   const toggleTheme = () => setIsDark(!isDark);
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>
-    {children}
-  </ThemeContext.Provider>
-  )
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
-export default ThemeProvider 
+ThemeProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default ThemeProvider;
