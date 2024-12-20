@@ -1,9 +1,9 @@
-import { Edit } from 'lucide-react';
+import { Edit, Search } from 'lucide-react';
 import { useDataContext } from '../contexts/DataContext';
 import { useEffect, useState } from 'react';
 import Button from './Generic/Button';
 import { useTheme } from '../contexts/ThemeContext';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 function ClientTable() {
   const intl = useIntl();
@@ -99,26 +99,38 @@ function ClientTable() {
       className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm`}
     >
       <div
-        className={`flex justify-between items-center p-6 border-b ${
+        className={`flex flex-wrap justify-between p-6 border-b ${
           isDark ? 'border-white' : 'border-gray-100'
         }`}
       >
         <h2
           className={`${
             isDark ? 'text-white' : 'text-gray-800'
-          } text-lg font-semibold`}
+          } text-lg font-semibold mb-4 lg:mb-0`}
         >
           {intl.formatMessage({ id: 'table.title.clientData' })}
         </h2>
-        <input
-          type='text'
-          placeholder={intl.formatMessage({ id: 'table.search.searchClient' })}
-          className={`${
-            isDark ? 'text-white bg-gray-800' : 'text-gray-800'
-          } p-2 border rounded w-60`}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+        <div className='relative mb-4 lg:mb-0'>
+          <input
+            type='text'
+            placeholder={intl.formatMessage({
+              id: 'table.search.searchClient',
+            })}
+            className={`${
+              isDark
+                ? 'text-white bg-gray-800 border-white'
+                : 'text-gray-800 bg-white border-gray-300'
+            } p-2 border rounded w-full lg:w-60 pl-10`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <Search
+            size={20}
+            className={`absolute left-3 top-1/2 transform -translate-y-1/2 ${
+              isDark ? 'text-white' : 'text-gray-400'
+            }`}
+          />
+        </div>
         <Button
           className='text-blue-500 text-sm hover:text-blue-600'
           btnLabel={intl.formatMessage({ id: 'table.lable.viewAllClientBtn' })}
@@ -185,8 +197,12 @@ function ClientTable() {
           </table>
         </div>
       ) : (
-        <div className='p-6 text-gray-500 text-center'>
-          <formatMessage id='table.search.noData' />.
+        <div
+          className={`p-6 text-center ${
+            isDark ? 'bg-gray-800 text-white' : 'bg-white text-gray-500'
+          }`}
+        >
+          <FormattedMessage id='table.search.noData' />
         </div>
       )}
     </div>

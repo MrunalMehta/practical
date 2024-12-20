@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import { Flag } from 'lucide-react';
 import Button from './Generic/Button';
 import English from '../assets/english.svg';
 import German from '../assets/german.svg';
@@ -20,7 +19,11 @@ function LanguageSelector() {
       {selectedLanguage.flag}
       <Button
         onClick={() => setIsOpen(!isOpen)}
-        className='flex items-center gap-2 bg-white border border-gray-300 rounded px-2 py-1'
+        className={`flex items-center gap-2 border ${
+          isDark
+            ? 'bg-gray-800 border-white text-white'
+            : 'bg-white border-gray-300 text-gray-800'
+        } rounded px-2 py-1`}
         btnLabel={
           <>
             {selectedLanguage?.name}
@@ -29,7 +32,13 @@ function LanguageSelector() {
         }
       />
       {isOpen && (
-        <div className='absolute top-full mt-1 bg-white border border-gray-300 rounded shadow-lg z-10'>
+        <div
+          className={`absolute top-full mt-1 border ${
+            isDark
+              ? 'bg-gray-800 border-white text-white'
+              : 'bg-white border-gray-300 text-gray-800'
+          } rounded shadow-lg z-10`}
+        >
           {languages.map((lang) => (
             <Button
               key={lang.code}
@@ -37,7 +46,9 @@ function LanguageSelector() {
                 changeLanguage(lang.code);
                 setIsOpen(false);
               }}
-              className='flex items-center gap-2 px-3 py-2 hover:bg-gray-100 w-full text-left'
+              className={`flex items-center gap-2 px-3 py-2 ${
+                isDark ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+              } w-full text-left`}
               btnLabel={
                 <>
                   {lang.flag}

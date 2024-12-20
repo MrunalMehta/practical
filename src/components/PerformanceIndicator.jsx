@@ -8,23 +8,84 @@ import {
 } from 'recharts';
 import Button from './Generic/Button';
 import { useTheme } from '../contexts/ThemeContext';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-const performanceData = [
-  { name: 'Jan', complaints: 160, taskDone: 120, attends: 100 },
-  { name: 'Feb', complaints: 140, taskDone: 130, attends: 110 },
-  { name: 'Mar', complaints: 180, taskDone: 140, attends: 120 },
-  { name: 'Apr', complaints: 140, taskDone: 120, attends: 100 },
-  { name: 'May', complaints: 160, taskDone: 130, attends: 110 },
-  { name: 'Jun', complaints: 150, taskDone: 120, attends: 90 },
-  { name: 'Jul', complaints: 170, taskDone: 140, attends: 120 },
-  { name: 'Aug', complaints: 160, taskDone: 130, attends: 110 },
-  { name: 'Sep', complaints: 180, taskDone: 150, attends: 130 },
-  { name: 'Oct', complaints: 170, taskDone: 140, attends: 120 },
-  { name: 'Nov', complaints: 160, taskDone: 130, attends: 110 },
-  { name: 'Dec', complaints: 180, taskDone: 150, attends: 130 },
-];
 function PerformanceIndicator() {
+  const intl = useIntl();
+  const performanceData = [
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.jan' }),
+      complaints: 160,
+      taskDone: 120,
+      attends: 100,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.feb' }),
+      complaints: 140,
+      taskDone: 130,
+      attends: 110,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.mar' }),
+      complaints: 180,
+      taskDone: 140,
+      attends: 120,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.apr' }),
+      complaints: 140,
+      taskDone: 120,
+      attends: 100,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.may' }),
+      complaints: 160,
+      taskDone: 130,
+      attends: 110,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.jun' }),
+      complaints: 150,
+      taskDone: 120,
+      attends: 90,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.jul' }),
+      complaints: 170,
+      taskDone: 140,
+      attends: 120,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.aug' }),
+      complaints: 160,
+      taskDone: 130,
+      attends: 110,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.sep' }),
+      complaints: 180,
+      taskDone: 150,
+      attends: 130,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.oct' }),
+      complaints: 170,
+      taskDone: 140,
+      attends: 120,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.nov' }),
+      complaints: 160,
+      taskDone: 130,
+      attends: 110,
+    },
+    {
+      name: intl.formatMessage({ id: 'chart.performanceIndicator.dec' }),
+      complaints: 180,
+      taskDone: 150,
+      attends: 130,
+    },
+  ];
   const { isDark } = useTheme();
   return (
     <div
@@ -32,7 +93,7 @@ function PerformanceIndicator() {
         isDark ? 'bg-gray-800' : 'bg-white'
       } rounded-lg shadow-sm p-6`}
     >
-      <div className='flex justify-between items-start mb-6'>
+      <div className='flex flex-wrap justify-between items-start mb-6'>
         <h2
           className={`${
             isDark ? 'text-white' : 'text-gray-800'
@@ -57,7 +118,7 @@ function PerformanceIndicator() {
         </div>
       </div>
 
-      <div className='flex gap-6 mb-4'>
+      <div className='flex flex-wrap gap-6 mb-4'>
         <div className='flex items-center gap-2'>
           <div className='w-3 h-3 rounded-full bg-cyan-400'></div>
           <span

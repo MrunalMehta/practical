@@ -53,9 +53,9 @@ function Layout({ children }) {
     <div className='flex'>
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       <main
-        className={`flex-1 flex flex-col transition-colors duration-300 w-[calc(100%-264px)] ${
-          isDark ? 'bg-gray-900' : 'bg-gray-50'
-        }`}
+        className={`flex-1 flex flex-col transition-colors duration-300 ${
+          isOpen ? 'w-[calc(100%-264px)]' : 'w-[calc(100%-64px)]'
+        } ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}
       >
         <Header />
         <div className='flex-1'>
