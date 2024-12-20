@@ -19,6 +19,13 @@
   max-width: none !important;
 } */
 /* Apply theme-specific styles */
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
 .dark {
   --bg-primary: var(--primary-dark);
   --text-primary: var(--text-dark);

@@ -12,7 +12,7 @@ function SearchInput({ searchQuery, setSearchQuery, isDark }) {
           isDark
             ? 'text-white bg-gray-800 border-white'
             : 'text-gray-800 bg-white border-gray-300'
-        } p-2 border rounded w-full lg:w-60 pl-10`}
+        } p-2 border rounded w-36 lg:w-60 pl-10`}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />

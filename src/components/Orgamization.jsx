@@ -40,6 +40,12 @@ function Orgamization({ handleNext, handlePrev }) {
           required: intl.formatMessage({
             id: 'multiStepForm.step2.lable.orgDetail.errorMsg',
           }),
+          pattern: {
+            value: /^[A-Za-z\s]+$/i,
+            message: intl.formatMessage({
+              id: 'multiStepForm.step2.lable.orgDetail.validateErrorMsg',
+            }),
+          },
         }}
         errors={errors}
         label={intl.formatMessage({
@@ -50,7 +56,7 @@ function Orgamization({ handleNext, handlePrev }) {
       <FormField
         name='registerNo'
         placeholder={intl.formatMessage({
-          id: 'multiStepForm.step2.lable.registeredNumber',
+          id: 'multiStepForm.step2.lable.registeredNumber.placeholder',
         })}
         register={register}
         rules={{

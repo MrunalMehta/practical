@@ -4,6 +4,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import Button from './Generic/Button';
 import { FormattedMessage, useIntl } from 'react-intl';
 import NavLink from './NavLink';
+import UserPic from '../assets/user-icon.png';
 function Sidebar({ isOpen, setIsOpen }) {
   const intl = useIntl();
   const menuItems = [
@@ -27,18 +28,21 @@ function Sidebar({ isOpen, setIsOpen }) {
   return (
     <aside
       className={`
-    ${isOpen ? 'w-64' : 'w-16'} 
-    ${isDark ? 'bg-gray-800 text-white' : 'bg-white text-black'}
-     transition-all duration-300 ease-in-out relative shrink-0
-  `}
+      fixed top-0 left-0 h-full z-20 transition-transform duration-300
+      ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      ${isDark ? 'bg-gray-800 text-white' : 'bg-white text-black'}
+      w-[264px]
+    `}
     >
       <Button
         onClick={() => setIsOpen(!isOpen)}
         className={`
-      absolute -right-3 top-5 ${
-        isDark ? 'hover:bg-gray-700' : ' hover:bg-gray-100'
-      } text-inherit p-1 rounded-full z-50
-    `}
+           absolute  top-5 ${isOpen ? '-right-3' : '-right-14'} ${
+          isDark
+            ? 'bg-gray-800 hover:bg-gray-700'
+            : 'bg-gray-50 hover:bg-gray-100'
+        } text-inherit p-1 rounded-full z-50
+        `}
         btnLabel={isOpen ? <X size={20} /> : <Menu size={20} />}
       />
 
@@ -59,11 +63,7 @@ function Sidebar({ isOpen, setIsOpen }) {
 
       <nav className='mt-8'>
         <div className='flex items-center gap-3 p-4'>
-          <img
-            src='https://via.placeholder.com/32'
-            alt='Profile'
-            className='w-8 h-8 rounded-full'
-          />
+          <img src={UserPic} alt='Profile' className='w-8 h-8 rounded-full' />
           {isOpen && (
             <span className={`${isDark ? 'text-white' : 'text-gray-800'}`}>
               <FormattedMessage id='profile.name' />

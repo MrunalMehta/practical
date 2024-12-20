@@ -4,9 +4,10 @@ import { ThemeContext } from '../contexts/ThemeContext';
 import Button from './Generic/Button';
 import LanguageSelector from './LanguageSelector';
 import { FormattedMessage } from 'react-intl';
+import UserPic from '../assets/user-icon.png';
 
 function Header() {
-  const { isDark } = useContext(ThemeContext);
+  const { isDark, isOpen } = useContext(ThemeContext);
 
   return (
     <header
@@ -18,7 +19,7 @@ function Header() {
       <div className='px-4 lg:px-6 py-4'>
         <div className='flex justify-end lg:items-center lg:justify-between'>
           <h1
-            className={`text-xl ${
+            className={`text-xl ${isOpen ? 'ml-0' : 'ml-12'} ${
               isDark ? 'text-white' : 'text-gray-800'
             } hidden lg:block`}
           >
@@ -72,7 +73,7 @@ function Header() {
 
             <div className='hidden lg:flex items-center gap-3'>
               <img
-                src='https://via.placeholder.com/32'
+                src={UserPic}
                 alt='Profile'
                 className='w-8 h-8 rounded-full'
               />

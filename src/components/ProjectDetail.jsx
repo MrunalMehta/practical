@@ -34,11 +34,13 @@ function ProjectDetail({ handlePrev, handleClose }) {
     const updatedFormData = { ...formData, ...data };
 
     if (isEditMode) {
-      const updatedTableData = tableData.filter(
-        (item) => item.id !== formData.id
+      const updatedTableData = tableData.map((item) =>
+        item.id === formData.id ? updatedFormData : item
       );
-      setTableData([...updatedTableData, updatedFormData]);
-      setOriginalData([...updatedTableData, updatedFormData]);
+      setTableData(updatedTableData);
+      setOriginalData((prev) =>
+        prev.map((item) => (item.id === formData.id ? updatedFormData : item))
+      );
       setIsEditMode(false);
     } else {
       setTableData((prev) => [...prev, updatedFormData]);
@@ -64,6 +66,12 @@ function ProjectDetail({ handlePrev, handleClose }) {
             required: intl.formatMessage({
               id: 'multiStepForm.step3.lable.projectName.errorMsg',
             }),
+            pattern: {
+              value: /^[A-Za-z\s]+$/i,
+              message: intl.formatMessage({
+                id: 'multiStepForm.step3.lable.projectName.validateErrorMsg',
+              }),
+            },
           }}
           errors={errors}
           label={intl.formatMessage({
@@ -114,7 +122,7 @@ function ProjectDetail({ handlePrev, handleClose }) {
         <FormField
           name='resources'
           placeholder={intl.formatMessage({
-            id: 'multiStepForm.step3.lable.resources',
+            id: 'multiStepForm.step3.lable.resources.placeholder',
           })}
           register={register}
           type='number'
@@ -137,7 +145,7 @@ function ProjectDetail({ handlePrev, handleClose }) {
         <FormField
           name='hours'
           placeholder={intl.formatMessage({
-            id: 'multiStepForm.step3.lable.hours',
+            id: 'multiStepForm.step3.lable.hours.placeholder',
           })}
           type='number'
           register={register}

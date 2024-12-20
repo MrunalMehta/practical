@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import Header from './Header';
@@ -31,8 +31,7 @@ NavLink.propTypes = {
   item: PropTypes.object.isRequired,
 };
 function Layout({ children }) {
-  const [isOpen, setIsOpen] = useState(true);
-  const { isDark } = useTheme();
+  const { isDark, isOpen, setIsOpen } = useTheme();
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,11 +49,13 @@ function Layout({ children }) {
   }, []);
 
   return (
-    <div className='flex'>
+    <div className='relative'>
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
       <main
         className={`flex-1 flex flex-col transition-colors duration-300 ${
-          isOpen ? 'w-[calc(100%-264px)]' : 'w-[calc(100%-64px)]'
+          isOpen
+            ? 'w-[calc(100%-0px)] lg:w-[calc(100%-264px)] ml-auto'
+            : 'w-[calc(100%-0px)]'
         } ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}
       >
         <Header />
