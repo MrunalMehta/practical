@@ -97,7 +97,7 @@ function ProjectDetail({ handlePrev, handleClose }) {
           register={register}
           rules={{
             required: intl.formatMessage({
-              id: 'multiStepForm.step3.lable.techStack.requiredErrorMsg',
+              id: 'mutliStepForm.step3.lable.techStack.requiredErrorMsg',
             }),
             pattern: {
               value: /^[A-Za-z\s,.]+$/,

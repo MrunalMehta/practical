@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Home, Menu, Moon, Sun, User, Users, X } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import Button from './Generic/Button';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import NavLink from './NavLink';
 function Sidebar({ isOpen, setIsOpen }) {
   const intl = useIntl();
@@ -58,6 +58,18 @@ function Sidebar({ isOpen, setIsOpen }) {
       </div>
 
       <nav className='mt-8'>
+        <div className='flex items-center gap-3 p-4'>
+          <img
+            src='https://via.placeholder.com/32'
+            alt='Profile'
+            className='w-8 h-8 rounded-full'
+          />
+          {isOpen && (
+            <span className={`${isDark ? 'text-white' : 'text-gray-800'}`}>
+              <FormattedMessage id='profile.name' />
+            </span>
+          )}
+        </div>
         {menuItems.map((item) => (
           <NavLink
             key={item.title}
